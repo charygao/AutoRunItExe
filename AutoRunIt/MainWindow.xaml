@@ -1,0 +1,42 @@
+﻿<Window x:Class="AutoRunIt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoRunIt"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d" 
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <local:WeekIntToBoolConverterConverter x:Key="WeekIntToBoolConverterConverter"></local:WeekIntToBoolConverterConverter>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20" IsEnabled="{Binding IsModifyEnable}" DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window ,Mode=FindAncestor}}">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="5">
+                <TextBox Text="重复周期" />
+                <CheckBox Content="周一" IsChecked="{Binding WeekInt,ConverterParameter=1,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+                <CheckBox Content="周二" IsChecked="{Binding WeekInt,ConverterParameter=2,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+                <CheckBox Content="周三" IsChecked="{Binding WeekInt,ConverterParameter=3,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+                <CheckBox Content="周四" IsChecked="{Binding WeekInt,ConverterParameter=4,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+                <CheckBox Content="周五" IsChecked="{Binding WeekInt,ConverterParameter=5,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+                <CheckBox Content="周六" IsChecked="{Binding WeekInt,ConverterParameter=6,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+                <CheckBox Content="周日" IsChecked="{Binding WeekInt,ConverterParameter=7,Converter={StaticResource WeekIntToBoolConverterConverter}}"/>
+            </StackPanel>
+            <StackPanel Margin="5">
+                <TextBlock Text="重复时间点" />
+                <xctk:TimePicker Format="LongTime" TimeInterval="00:30:00" Value="{Binding WhenToStart}"/>
+            </StackPanel>
+            <StackPanel Margin="5">
+                <TextBlock Text="当前日期" />
+                <TextBlock Text="{Binding DateTimeNow,Mode=OneWay}" />
+                <TextBlock Text="程序路径" />
+                <TextBox Text="{Binding ExePath}"/>
+                <Button Content="浏览" Click="OpenFileDialogButtonOnClick"/>
+            </StackPanel>
+            <Button Content="开始" Click="StartButtonOnClick"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
